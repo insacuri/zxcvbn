@@ -1,10 +1,18 @@
+# coding=UTF-8
 import simplejson
 
-qwerty = r'''
+us_qwerty = r'''
 `~ 1! 2@ 3# 4$ 5% 6^ 7& 8* 9( 0) -_ =+
     qQ wW eE rR tT yY uU iI oO pP [{ ]} \|
      aA sS dD fF gG hH jJ kK lL ;: '"
       zZ xX cC vV bB nN mM ,< .> /?
+'''
+
+uk_qwerty = r'''
+`~ 1! 2@ 3$ 4$ 5% 6^ 7& 8* 9( 0) -_ =+
+    qQ wW eE rR tT yY uU iI oO pP [{ ]}
+     aA sS dD fF gG hH jJ kK lL ;: '@ #~
+      \| zZ xX cC vV bB nN mM ,< .> /?
 '''
 
 dvorak = r'''
@@ -77,9 +85,10 @@ def build_graph(layout_str, slanted):
 
 if __name__ == '__main__':
     with open('adjacency_graphs.js', 'w') as f:
-        for graph_name, args in [('qwerty', (qwerty, True)),
-                                 ('dvorak', (dvorak, True)),
-                                 ('keypad', (keypad, False)),
+        for graph_name, args in [('us_qwerty', (us_qwerty, True)),
+                                 ('uk_qwerty', (uk_qwerty, True)),
+                                 ('dvorak',    (dvorak, True)),
+                                 ('keypad',    (keypad, False)),
                                  ('mac_keypad', (mac_keypad, False))]:
             graph = build_graph(*args)
             f.write('var %s = %s;\n\n' % (graph_name, simplejson.dumps(graph, sort_keys=True)))
